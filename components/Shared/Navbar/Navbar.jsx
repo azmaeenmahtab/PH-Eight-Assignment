@@ -1,5 +1,5 @@
 "use client";
-
+import profilepic from "@/assets/profile.png"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import {
     faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 const navItems = [
     { label: "Home", href: "/home" },
@@ -80,11 +81,13 @@ export const Navbar = () => {
 
                     {session ? (
                         <>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center">
                                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600">
-                                    <FontAwesomeIcon
-                                        icon={faUserCircle}
-                                        className="h-5 w-5"
+                                    <Image 
+                                    src={profilepic}
+                                    width={70}
+                                    height={70}
+                                    alt="profile image"
                                     />
                                 </span>
                             </div>
