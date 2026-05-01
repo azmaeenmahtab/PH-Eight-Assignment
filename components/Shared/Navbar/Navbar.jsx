@@ -14,7 +14,7 @@ import Image from "next/image";
 
 const navItems = [
     { label: "Home", href: "/home" },
-    { label: "All Books", href: "/books" },
+    { label: "All Books", href: "/books-all" },
     { label: "My Profile", href: "/profile" },
 ];
 
@@ -38,7 +38,7 @@ export const Navbar = () => {
                     Lumina Library
                 </Link>
 
-                <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
+                <div className="flex flex-1 items-center justify-center gap-6 text-sm font-medium text-slate-500">
                     {navItems.map((item) => {
                         const isActive = pathname === item.href;
 
@@ -59,7 +59,7 @@ export const Navbar = () => {
                 </div>
 
                 <div className="ml-auto flex items-center gap-4">
-                    <div className="relative hidden md:block">
+                    {/* <div className="relative hidden md:block">
                         <FontAwesomeIcon
                             icon={faMagnifyingGlass}
                             className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
@@ -69,7 +69,7 @@ export const Navbar = () => {
                             placeholder="Search library..."
                             className="w-56 rounded-full border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200"
                         />
-                    </div>
+                    </div> */}
 
                     <button
                         type="button"

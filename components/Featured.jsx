@@ -9,8 +9,8 @@ const Featured = () => {
 	return (
 		<section className="py-12">
 			<div className="mx-auto max-w-6xl px-4">
-				<div className="mb-8 flex items-end justify-between gap-4">
-					<div>
+				<div className="mb-8 text-center flex items-end justify-between gap-4">
+					<div className="mx-auto">
 						<p className="text-lg font-semibold uppercase tracking-[0.2em] text-[#1F6F5F]">
 							Featured Picks
 						</p>
