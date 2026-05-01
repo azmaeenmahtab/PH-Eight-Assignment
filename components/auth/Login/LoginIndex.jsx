@@ -2,13 +2,42 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import GreenButton from "@/components/Shared/Button/GreenButton";
 import libraryImage from "@/assets/library.jpg";
-
+import { authClient } from "@/lib/auth-client";
+ 
 const LoginPageIndex = () => {
-    const handleLogin = () => {
-        // Placeholder for login action
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        if (isLoading) return;
+
+        setIsLoading(true);
+
+        const formData = new FormData(event.currentTarget);
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const rememberMe = formData.get("rememberMe") === "on";
+
+        try {
+            await authClient.signIn.email({
+                email,
+                password,
+                rememberMe,
+            });
+            router.push("/home");
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+
 
     return (
         <section className="flex w-full items-center justify-center px-4 py-12">
@@ -59,11 +88,12 @@ const LoginPageIndex = () => {
                         <span className="h-px flex-1 bg-slate-200" />
                     </div>
 
-                    <form className="flex flex-col gap-4">
+                    <form className="flex flex-col gap-4" onSubmit={handleLogin}>
                         <label className="text-xs font-semibold text-slate-600">
                             Email
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="m@example.com"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
@@ -81,6 +111,7 @@ const LoginPageIndex = () => {
                             </span>
                             <input
                                 type="password"
+                                name="password"
                                 placeholder="••••••••"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
@@ -89,12 +120,17 @@ const LoginPageIndex = () => {
                         <label className="flex items-center gap-2 text-xs text-slate-500">
                             <input
                                 type="checkbox"
+                                name="rememberMe"
                                 className="h-4 w-4 rounded border-slate-300 text-[#1F6F5F] focus:ring-[#6FCF97]"
                             />
                             Remember me for 30 days
                         </label>
 
-                        <GreenButton text="Login" onClick={handleLogin} />
+                        <GreenButton
+                            type="submit"
+                            text={isLoading ? "Logging in..." : "Login"}
+                            disabled={isLoading}
+                        />
                     </form>
 
                     <p className="mt-6 text-center text-xs text-slate-500">

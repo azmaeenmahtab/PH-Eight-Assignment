@@ -2,16 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import GreenButton from "@/components/Shared/Button/GreenButton";
 import libraryImage from "@/assets/biglibrary.webp";
-import { signUp } from "@/lib/auth-client";
 import { authClient } from "@/lib/auth-client";
 
 
 const SignupPageIndex = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     const handleRegister = async (event) => {
         event.preventDefault();
+        if (isLoading) return;
+        setIsLoading(true);
 
         const formdata = Object.fromEntries(new FormData(event.currentTarget));
 
@@ -25,10 +30,14 @@ const SignupPageIndex = () => {
                 // image: "https://example.com/image.png",
                 // callbackURL: "https://example.com/callback",
             });
-
-            console.log(data)
+            if (!error) {
+                router.push("/home");
+            }
+            console.log(data);
         } catch (err) {
-            console.log(err)
+            console.log(err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -122,7 +131,11 @@ const SignupPageIndex = () => {
                             />
                         </label>
 
-                        <GreenButton type="submit" text="Register" />
+                        <GreenButton
+                            type="submit"
+                            text={isLoading ? "Registering..." : "Register"}
+                            disabled={isLoading}
+                        />
                     </form>
 
                     <p className="mt-6 text-center text-xs text-slate-500">

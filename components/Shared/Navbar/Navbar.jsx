@@ -9,6 +9,7 @@ import {
     faRightFromBracket,
     faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { authClient } from "@/lib/auth-client";
 
 const navItems = [
     { label: "Home", href: "/home" },
@@ -18,6 +19,13 @@ const navItems = [
 
 export const Navbar = () => {
     const pathname = usePathname();
+
+    const handlelogout = async () =>{
+        await authClient.signOut();
+    }
+
+    const { data: session } = authClient.useSession();
+
 
     return (
         <nav className="w-full border-b border-slate-200 bg-white">
@@ -70,19 +78,37 @@ export const Navbar = () => {
                         <FontAwesomeIcon icon={faCartShopping} className="h-4 w-4" />
                     </button>
 
-                    <div className="flex items-center gap-2">
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600">
-                            <FontAwesomeIcon icon={faUserCircle} className="h-5 w-5" />
-                        </span>
-                    </div>
+                    {session ? (
+                        <>
+                            <div className="flex items-center gap-2">
+                                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600">
+                                    <FontAwesomeIcon
+                                        icon={faUserCircle}
+                                        className="h-5 w-5"
+                                    />
+                                </span>
+                            </div>
 
-                    <button
-                        type="button"
-                        className="flex items-center gap-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
-                    >
-                        <FontAwesomeIcon icon={faRightFromBracket} className="h-4 w-4" />
-                        Logout
-                    </button>
+                            <button
+                                onClick={handlelogout}
+                                type="button"
+                                className="flex items-center gap-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+                            >
+                                <FontAwesomeIcon
+                                    icon={faRightFromBracket}
+                                    className="h-4 w-4"
+                                />
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link
+                            href="/auth/login"
+                            className="text-sm font-semibold text-[#1F6F5F]"
+                        >
+                            Log in
+                        </Link>
+                    )}
                 </div>
             </div>
         </nav>
