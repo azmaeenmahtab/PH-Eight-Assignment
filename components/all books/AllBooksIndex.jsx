@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Books } from "@/lib/mockupdata";
 import SidePanel from "./SidePanel";
@@ -27,9 +28,6 @@ const AllBooksIndex = () => {
         });
     }, [search, selectedCategory, availableOnly]);
 
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [search, selectedCategory, availableOnly]);
 
     const totalPages = Math.max(1, Math.ceil(filteredBooks.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -44,9 +42,15 @@ const AllBooksIndex = () => {
                 <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
                     <SidePanel
                         selectedCategory={selectedCategory}
-                        onSelectCategory={setSelectedCategory}
+                        onSelectCategory={(category) => {
+                            setSelectedCategory(category);
+                            setCurrentPage(1);
+                        }}
                         availableOnly={availableOnly}
-                        onToggleAvailable={setAvailableOnly}
+                        onToggleAvailable={(value) => {
+                            setAvailableOnly(value);
+                            setCurrentPage(1);
+                        }}
                     />
 
                     <div>
@@ -69,7 +73,10 @@ const AllBooksIndex = () => {
                                 <input
                                     type="search"
                                     value={search}
-                                    onChange={(event) => setSearch(event.target.value)}
+                                    onChange={(event) => {
+                                        setSearch(event.target.value);
+                                        setCurrentPage(1);
+                                    }}
                                     placeholder="Search by title..."
                                     className="w-full rounded-full border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200"
                                 />
@@ -101,12 +108,12 @@ const AllBooksIndex = () => {
                                         <p className="text-sm text-slate-500">By {book.author}</p>
 
                                         <div className="mt-auto flex items-center justify-between pt-4">
-                                            <button
-                                                type="button"
+                                            <Link
+                                                href={`/books-all/${book.id}`}
                                                 className="rounded-full bg-[#1F6F5F] px-4 py-2 text-xs font-semibold text-white"
                                             >
                                                 Details
-                                            </button>
+                                            </Link>
                                             <button
                                                 type="button"
                                                 aria-label="Bookmark"

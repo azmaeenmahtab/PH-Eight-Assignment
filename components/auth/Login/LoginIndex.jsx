@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 import GreenButton from "@/components/Shared/Button/GreenButton";
 import libraryImage from "@/assets/library.jpg";
 import { authClient } from "@/lib/auth-client";
- 
+// import { FontAwesomeIcon, fa-go } from "@fortawesome/react-fontawesome";
+
 const LoginPageIndex = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
 
     const handleLogin = async (event) => {
@@ -17,6 +19,7 @@ const LoginPageIndex = () => {
         if (isLoading) return;
 
         setIsLoading(true);
+        setErrorMessage("");
 
         const formData = new FormData(event.currentTarget);
         const email = formData.get("email");
@@ -24,14 +27,18 @@ const LoginPageIndex = () => {
         const rememberMe = formData.get("rememberMe") === "on";
 
         try {
-            await authClient.signIn.email({
+            const { error } = await authClient.signIn.email({
                 email,
                 password,
                 rememberMe,
             });
+            if (error) {
+                setErrorMessage(error.message || "Login failed. Please try again.");
+                return;
+            }
             router.push("/home");
         } catch (err) {
-            console.log(err);
+            setErrorMessage("Login failed. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -73,14 +80,32 @@ const LoginPageIndex = () => {
                     </div>
 
                     <button
+                        onClick={async () => {
+                            setErrorMessage("");
+                            try {
+                                const { error } = await authClient.signIn.social({
+                                    provider: "google",
+                                });
+                                if (error) {
+                                    setErrorMessage(
+                                        error.message || "Google login failed."
+                                    );
+                                    return;
+                                }
+                                router.push("/home");
+                            } catch (err) {
+                                setErrorMessage("Google login failed.");
+                            }
+                        }}
                         type="button"
-                        className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition-colors hover:bg-slate-50"
+                        className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-200 bg-white py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition-colors hover:bg-slate-50 "
                     >
                         <span className="flex h-5 w-5 items-center justify-center rounded-full border border-slate-200 text-xs font-bold text-slate-500">
                             G
                         </span>
                         Continue with Google
                     </button>
+                    
 
                     <div className="my-5 flex items-center gap-3 text-xs text-slate-400">
                         <span className="h-px flex-1 bg-slate-200" />
@@ -89,6 +114,11 @@ const LoginPageIndex = () => {
                     </div>
 
                     <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+                        {errorMessage && (
+                            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-600">
+                                {errorMessage}
+                            </div>
+                        )}
                         <label className="text-xs font-semibold text-slate-600">
                             Email
                             <input

@@ -1,10 +1,14 @@
+
 import Image from "next/image";
 import { Books } from "@/lib/mockupdata";
+import Link from "next/link";
 
 const Featured = () => {
 	const topRated = [...Books]
 		.sort((a, b) => b.rating - a.rating)
 		.slice(0, 4);
+
+   
 
 	return (
 		<section className="py-12">
@@ -55,12 +59,12 @@ const Featured = () => {
 							</h3>
 							<p className="text-sm text-slate-500">By {book.author}</p>
 
-							<button
-								type="button"
-								className="mt-5 w-full rounded-xl border border-[#1F6F5F] px-4 py-2.5 text-sm font-semibold text-[#1F6F5F] transition-colors hover:bg-[#E9F4F0]"
+							<Link
+								href={`/books-all/${book.id}`}
+								className="mt-5 w-full text-center rounded-xl border border-[#1F6F5F] px-4 py-2.5 text-sm font-semibold text-[#1F6F5F] transition-colors hover:bg-[#E9F4F0]"
 							>
 								View Details
-							</button>
+							</Link>
 						</article>
 					))}
 				</div>

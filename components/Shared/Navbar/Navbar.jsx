@@ -26,6 +26,7 @@ export const Navbar = () => {
     }
 
     const { data: session } = authClient.useSession();
+    const userImage = session?.user?.image;
 
 
     return (
@@ -82,13 +83,21 @@ export const Navbar = () => {
                     {session ? (
                         <>
                             <div className="flex items-center">
-                                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600">
-                                    <Image 
-                                    src={profilepic}
-                                    width={70}
-                                    height={70}
-                                    alt="profile image"
-                                    />
+                                <span className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-slate-600">
+                                    {userImage ? (
+                                        <img
+                                            src={userImage}
+                                            alt="profile image"
+                                            className="h-full w-full object-cover"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={profilepic}
+                                            width={70}
+                                            height={70}
+                                            alt="profile image"
+                                        />
+                                    )}
                                 </span>
                             </div>
 

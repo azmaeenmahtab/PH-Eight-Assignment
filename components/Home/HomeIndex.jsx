@@ -29,13 +29,13 @@ const HomeIndex = () => {
         >
           <div className="flex items-center gap-8 px-6">
             {promoItems.map((item) => (
-              <span
-                key={item}
+              <div
+                key={item.id}
                 className="inline-flex items-center gap-3 whitespace-nowrap"
               >
                 <span className="h-2 w-2 rounded-full bg-[#6FCF97]" />
                 {item}
-              </span>
+              </div>
             ))}
           </div>
         </Marquee>
