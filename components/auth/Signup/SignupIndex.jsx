@@ -4,16 +4,38 @@ import Image from "next/image";
 import Link from "next/link";
 import GreenButton from "@/components/Shared/Button/GreenButton";
 import libraryImage from "@/assets/biglibrary.webp";
+import { signUp } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
+
 
 const SignupPageIndex = () => {
-    const handleRegister = () => {
-        // Placeholder for register action
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+
+        const formdata = Object.fromEntries(new FormData(event.currentTarget));
+
+        console.log(formdata);
+
+        try {
+            const { data, error } = await authClient.signUp.email({
+                name: formdata.name, // required
+                email: formdata.email, // required
+                password: formdata.password, // required
+                // image: "https://example.com/image.png",
+                // callbackURL: "https://example.com/callback",
+            });
+
+            console.log(data)
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     return (
         <section className="flex w-full items-center justify-center px-4 py-12">
             <div className="grid w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-[1.1fr_1fr]">
-                <div className="relative min-h-[320px]">
+                <div className="relative min-h-80">
                     <Image
                         src={libraryImage}
                         alt="Library interior"
@@ -59,11 +81,12 @@ const SignupPageIndex = () => {
                         <span className="h-px flex-1 bg-slate-200" />
                     </div>
 
-                    <form className="flex flex-col gap-4">
+                    <form className="flex flex-col gap-4" onSubmit={handleRegister}>
                         <label className="text-xs font-semibold text-slate-600">
                             Name
                             <input
                                 type="text"
+                                name="name"
                                 placeholder="Full name"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
@@ -73,6 +96,7 @@ const SignupPageIndex = () => {
                             Email
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="name@example.com"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
@@ -82,6 +106,7 @@ const SignupPageIndex = () => {
                             Password
                             <input
                                 type="password"
+                                name="password"
                                 placeholder="••••••••"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
@@ -91,12 +116,13 @@ const SignupPageIndex = () => {
                             Confirm Password
                             <input
                                 type="password"
+                                name="confirmPassword"
                                 placeholder="••••••••"
                                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-100"
                             />
                         </label>
 
-                        <GreenButton text="Register button" onClick={handleRegister} />
+                        <GreenButton type="submit" text="Register" />
                     </form>
 
                     <p className="mt-6 text-center text-xs text-slate-500">
