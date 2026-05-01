@@ -1,6 +1,8 @@
 import Marquee from "react-fast-marquee";
 import Banner from "./Banner";
 import Featured from "../Featured";
+import Sustainability from "./Sustainability";
+import Community from "./Community";
 
 
 const promoItems = [
@@ -40,6 +42,8 @@ const HomeIndex = () => {
       </div>
 
       <Featured />
+      <Sustainability />
+      <Community />
     </div>
   );
 };
