@@ -1,6 +1,6 @@
-import { SignupPageIndex } from "@/components/auth/Signup/SignupIndex"
+import SignupPageIndex from "@/components/auth/Signup/SignupIndex"
 
-export const SignupPage = () => {
+const SignupPage = () => {
 
     return(
         <div>
@@ -8,3 +8,5 @@ export const SignupPage = () => {
         </div>
     )
 }
+
+export default SignupPage;
