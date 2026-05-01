@@ -92,9 +92,7 @@ const SignupPageIndex = () => {
                                     setErrorMessage(
                                         error.message || "Google signup failed."
                                     );
-                                    return;
                                 }
-                                router.push("/home");
                             } catch (err) {
                                 setErrorMessage("Google signup failed.");
                             }

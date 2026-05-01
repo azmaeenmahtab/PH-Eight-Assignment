@@ -49,7 +49,7 @@ const LoginPageIndex = () => {
     return (
         <section className="flex w-full items-center justify-center px-4 py-12">
             <div className="grid w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-[1.1fr_1fr]">
-                <div className="relative min-h-[320px]">
+                <div className="relative min-h-80">
                     <Image
                         src={libraryImage}
                         alt="Library shelves"
@@ -90,9 +90,7 @@ const LoginPageIndex = () => {
                                     setErrorMessage(
                                         error.message || "Google login failed."
                                     );
-                                    return;
                                 }
-                                router.push("/home");
                             } catch (err) {
                                 setErrorMessage("Google login failed.");
                             }
