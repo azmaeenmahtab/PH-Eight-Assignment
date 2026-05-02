@@ -25,12 +25,15 @@ const SignupPageIndex = () => {
         console.log(formdata);
 
         try {
+            const callbackURL = typeof window !== "undefined"
+                ? `${window.location.origin}/auth/login`
+                : "/auth/login";
             const { data, error } = await authClient.signUp.email({
                 name: formdata.name, // required
                 email: formdata.email, // required
                 password: formdata.password, // required
                 image: formdata.photoUrl || undefined,
-                // callbackURL: "https://example.com/callback",
+                callbackURL,
             });
             if (error) {
                 setErrorMessage(error.message || "Signup failed. Please try again.");
