@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 const Featured = () => {
 	const topRated = [...Books]
 		.sort((a, b) => b.rating - a.rating)
-		.slice(0, 4);
+		.slice(0, 6);
 
    
 
