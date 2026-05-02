@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Books } from "@/lib/mockupdata";
+import { addBorrowHistory } from "@/lib/borrow-history";
 import { authClient } from "@/lib/auth-client";
 
 const BookDetails = ({ bookId }) => {
@@ -69,6 +70,12 @@ const BookDetails = ({ bookId }) => {
         if (!session) {
             toast.info("Please log in to borrow this book.");
             router.push(`/auth/login?redirect=/books-all/${resolvedBookId}`);
+            return;
+        }
+
+        const result = addBorrowHistory(book);
+        if (!result.added) {
+            toast.info("This book is already in your history.");
             return;
         }
 

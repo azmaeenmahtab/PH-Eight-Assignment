@@ -2,8 +2,10 @@
 
 import GreenButton from "@/components/Shared/Button/GreenButton";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const ProfileSummaryCard = () => {
+  const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const displayName = user?.name || "Guest";
@@ -15,6 +17,10 @@ const ProfileSummaryCard = () => {
     .join("")
     .slice(0, 2)
     .toUpperCase();
+
+  const handleUpdateClick = () => {
+    router.push("/profile/update");
+  };
 
   return (
     <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
@@ -43,7 +49,7 @@ const ProfileSummaryCard = () => {
             {isPending ? "Fetching email..." : email}
           </p>
         </div>
-        <GreenButton text="Update Information" />
+        <GreenButton text="Update Information" onClick={handleUpdateClick} />
       </div>
     </div>
   );

@@ -72,13 +72,13 @@ export const Navbar = () => {
                         />
                     </div> */}
 
-                    <button
+                    {/* <button
                         type="button"
                         aria-label="View cart"
                         className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:bg-slate-100"
                     >
                         <FontAwesomeIcon icon={faCartShopping} className="h-4 w-4" />
-                    </button>
+                    </button> */}
 
                     {session ? (
                         <>
