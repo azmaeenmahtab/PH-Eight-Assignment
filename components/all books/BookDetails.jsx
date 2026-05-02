@@ -85,7 +85,7 @@ const BookDetails = ({ bookId }) => {
     return (
         <section className="bg-[#F7F7F5] py-12">
             <div className="mx-auto grid max-w-5xl gap-10 px-4 md:grid-cols-[1fr_1.2fr] md:items-start">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm md:h-[460px] md:aspect-auto">
+                <div className="relative aspect-3/4 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm md:h-115 md:aspect-auto">
                     <Image
                         src={book.image_url}
                         alt={book.title}

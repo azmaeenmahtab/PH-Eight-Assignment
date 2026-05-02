@@ -51,7 +51,7 @@ const RecentActivity = () => {
               className="flex items-center justify-between gap-4 rounded-xl border border-slate-100 p-3"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-100 to-emerald-300 text-xs font-semibold text-emerald-700">
+                <div className="flex h-12 w-10 items-center justify-center rounded-lg bg-linear-to-br from-emerald-100 to-emerald-300 text-xs font-semibold text-emerald-700">
                   BK
                 </div>
                 <div>
