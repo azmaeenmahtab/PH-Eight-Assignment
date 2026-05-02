@@ -88,8 +88,12 @@ const SignupPageIndex = () => {
                         onClick={async () => {
                             setErrorMessage("");
                             try {
+                                const callbackURL = typeof window !== "undefined"
+                                    ? `${window.location.origin}/auth/login`
+                                    : "/auth/login";
                                 const { error } = await authClient.signIn.social({
                                     provider: "google",
+                                    callbackURL,
                                 });
                                 if (error) {
                                     setErrorMessage(
