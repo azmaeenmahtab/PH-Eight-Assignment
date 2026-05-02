@@ -15,7 +15,7 @@ const Banner = () => {
         <div className="absolute inset-0 bg-linear-to-r from-white via-white/10 to-white/0" />
       </div>
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-30 md:flex-row md:items-center md:justify-between md:px-10">
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 md:flex-row md:items-center md:justify-between md:px-10 md:py-30">
         <div className="max-w-xl">
           <span className="inline-flex items-center rounded-full bg-[#D7F0E7] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1F6F5F]">
             Digital Sanctuary

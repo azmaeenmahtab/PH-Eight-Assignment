@@ -54,7 +54,7 @@ const AllBooksIndex = () => {
                     />
 
                     <div>
-                        <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                             <div>
                                 <h1 className="text-2xl font-semibold text-[#1B3B35]">
                                     Explore the Collection
@@ -129,7 +129,7 @@ const AllBooksIndex = () => {
                             ))}
                         </div>
 
-                        <div className="mt-8 flex items-center justify-center gap-2">
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
                             {Array.from({ length: totalPages }, (_, index) => {
                                 const page = index + 1;
                                 const isActive = page === currentPage;
