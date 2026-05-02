@@ -1,5 +1,4 @@
 "use client";
-import profilepic from "@/assets/profile.png";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -31,7 +30,14 @@ export const Navbar = () => {
     };
 
     const { data: session } = authClient.useSession();
-    const userImage = session?.user?.image;
+    const userImage = session?.user?.image?.trim();
+    const displayName = session?.user?.name?.trim() || "Reader";
+    const initials = displayName
+        .split(" ")
+        .map((part) => part[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
 
 
     return (
@@ -45,15 +51,22 @@ export const Navbar = () => {
                         Lumina Library
                     </Link>
 
-                    <button
-                        type="button"
-                        aria-label="Toggle navigation"
-                        aria-expanded={isMenuOpen}
-                        onClick={() => setIsMenuOpen((open) => !open)}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-900 transition-colors hover:bg-slate-100 md:hidden"
-                    >
-                        <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
-                    </button>
+                    <div className="flex items-center gap-2 md:hidden">
+                        {session && (
+                            <span className="max-w-28 truncate text-xs font-semibold text-slate-700">
+                                {displayName}
+                            </span>
+                        )}
+                        <button
+                            type="button"
+                            aria-label="Toggle navigation"
+                            aria-expanded={isMenuOpen}
+                            onClick={() => setIsMenuOpen((open) => !open)}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-900 transition-colors hover:bg-slate-100"
+                        >
+                            <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
+                        </button>
+                    </div>
                 </div>
 
                 <div
@@ -87,7 +100,7 @@ export const Navbar = () => {
                         {session ? (
                             <>
                                 <span className="text-sm font-medium text-slate-700">
-                                    {session?.user?.name || "Reader"}
+                                    {displayName}
                                 </span>
                                 <div className="flex items-center">
                                     <span className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-slate-600">
@@ -95,15 +108,16 @@ export const Navbar = () => {
                                             <Image
                                                 src={userImage}
                                                 alt="profile image"
+                                                width={36}
+                                                height={36}
+                                                sizes="36px"
                                                 className="h-full w-full object-cover"
+                                                unoptimized
                                             />
                                         ) : (
-                                            <Image
-                                                src={profilepic}
-                                                width={70}
-                                                height={70}
-                                                alt="profile image"
-                                            />
+                                            <span className="text-xs font-semibold text-slate-700">
+                                                {initials}
+                                            </span>
                                         )}
                                     </span>
                                 </div>
