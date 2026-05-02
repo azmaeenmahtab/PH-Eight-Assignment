@@ -40,7 +40,6 @@ const HomeIndex = () => {
           </div>
         </Marquee>
       </div>
-
       <Featured />
       <Sustainability />
       <Community />
