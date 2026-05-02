@@ -37,7 +37,7 @@ const SignupPageIndex = () => {
                 return;
             }
             if (!error) {
-                router.push("/home");
+                router.push("/auth/login");
             }
             console.log(data);
         } catch (err) {

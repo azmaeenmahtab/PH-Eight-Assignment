@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import libraryImage from "@/assets/library.jpg";
 
 const Banner = () => {
@@ -28,12 +29,12 @@ const Banner = () => {
             classics to modern masterpieces, your intellectual journey starts here.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              type="button"
+            <Link
+              href="/books-all"
               className="rounded-full bg-[#1F6F5F] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#2FA084]"
             >
               Browse Now
-            </button>
+            </Link>
             <button
               type="button"
               className="rounded-full border border-[#1F6F5F] px-6 py-3 text-sm font-semibold text-[#1F6F5F] transition-colors hover:bg-[#E9F4F0]"

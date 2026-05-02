@@ -86,6 +86,9 @@ export const Navbar = () => {
 
                         {session ? (
                             <>
+                                <span className="text-sm font-medium text-slate-700">
+                                    {session?.user?.name || "Reader"}
+                                </span>
                                 <div className="flex items-center">
                                     <span className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-slate-600">
                                         {userImage ? (
